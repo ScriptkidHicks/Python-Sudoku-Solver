@@ -42,6 +42,10 @@ class Board:
             for xCoord in range(9):
                 self.squares[((yCoord // 3) * 3) + (xCoord // 3)][((yCoord % 3) * 3) + (xCoord % 3)] = self.rows[yCoord][xCoord]
 
+        consistency = self.board_consistent()
+        if not consistency:
+            print("This board is not consistent, please check your work")
+
     def print_by_rows(self):
         for row in self.rows:
             print(row)
@@ -53,3 +57,44 @@ class Board:
     def print_by_squares(self):
         for square in self.squares:
             print(square)
+
+    def row_consistent(self, row_index):
+        taken = []
+        for element in self.rows[row_index]:
+            if element.check_value in taken:
+                return False
+            else:
+                taken.append(element.check_value)
+        return True
+
+    def col_consistent(self, col_index):
+        taken = []
+        for element in self.rows[col_index]:
+            if element.check_value in taken:
+                return False
+            else:
+                taken.append(element.check_value)
+        return True
+
+    def square_consistent(self, square_index):
+        taken = []
+        for element in self.squares[square_index]:
+            if element.check_value in taken:
+                return False
+            else:
+                taken.append(element.check_value)
+        return True
+
+    def board_consistent(self):
+        consistent = True
+        for x in range(9):
+            consistent = self.row_consistent(x)
+            if not consistent:
+                return False
+            consistent = self.col_consistent(x)
+            if not consistent:
+                return False
+            consistent = self.square_consistent(x)
+            if not consistent:
+                return False
+        return True
