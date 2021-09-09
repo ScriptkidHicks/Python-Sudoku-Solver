@@ -15,4 +15,9 @@ empty = [
 
 newBoard = Board()
 newBoard.set_by_rows(empty)
-newBoard.print_by_squares()
+mySolver = Solver(newBoard)
+mySolver.naked_solve()
+mySolver.naked_solve()
+mySolver.naked_solve()
+print()
+newBoard.print_by_rows()

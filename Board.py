@@ -47,8 +47,11 @@ class Board:
             # this solution is extremely clever, and I am proud of myself
         for yCoord in range(9):
             for xCoord in range(9):
-                print(xCoord, yCoord)
                 self.squares[((yCoord // 3) * 3) + (xCoord // 3)][((yCoord % 3) * 3) + (xCoord % 3)] = self.rows[yCoord][xCoord]
+        consistency = self.board_consistent()
+        if not consistency:
+            print("This board is not consistent, please reconsider")
+            exit()
 
     def __repr__(self):
         return str(self.rows)
@@ -106,4 +109,5 @@ class Board:
             if not consistent:
                 print("sqr error", x)
                 return False
+        print("Board Consistent")
         return True
