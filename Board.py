@@ -16,18 +16,19 @@ class Board:
         # to track the maximum number in any spot.
         self.max = 0
 
-    def set_by_rows(self, input_rows: List[List]):
+    def set_by_rows(self, input_rows: List[List[int]]):
         self.max = len(input_rows)
-        self.rows = [[]] * self.max
+        self.rows = []
 
-        for x in range(len(input_rows)):
-            for value in input_rows[x]:
-                self.rows[x].append(Tile(value))
+        for row_index, row in enumerate(input_rows):
+            self.rows.append([])
+            for value in row:
+                self.rows[row_index].append(Tile(value))
 
         # Now that we have the rows set, we can reference them to build the
         # columns
 
-        self.columns = [[self.rows[x][y] for y in range(self.max)] for x in range(self.max)]
+        self.columns = [[self.rows[y][x] for y in range(self.max)] for x in range(self.max)]
         # Python list comprehension, while slow, rocks
 
         # This one is a little trickier. Formally the squares are indexed left
@@ -36,15 +37,21 @@ class Board:
         #  [ 4, 5, 6 ]
         #  [ 7, 8, 9 ]]
 
-        # this solution is extremely clever, and I am proud of myself
-        self.squares = [[None] * 9 ] * 9
+        self.squares = []
+        for x in range(9):
+            appendage = []
+            for y in range(9):
+                appendage.append(None)
+            self.squares.append(appendage)
+
+            # this solution is extremely clever, and I am proud of myself
         for yCoord in range(9):
             for xCoord in range(9):
+                print(xCoord, yCoord)
                 self.squares[((yCoord // 3) * 3) + (xCoord // 3)][((yCoord % 3) * 3) + (xCoord % 3)] = self.rows[yCoord][xCoord]
 
-        consistency = self.board_consistent()
-        if not consistency:
-            print("This board is not consistent, please check your work")
+    def __repr__(self):
+        return str(self.rows)
 
     def print_by_rows(self):
         for row in self.rows:
@@ -86,15 +93,17 @@ class Board:
         return True
 
     def board_consistent(self):
-        consistent = True
         for x in range(9):
             consistent = self.row_consistent(x)
             if not consistent:
+                print("row error", x)
                 return False
             consistent = self.col_consistent(x)
             if not consistent:
+                print("col error", x)
                 return False
             consistent = self.square_consistent(x)
             if not consistent:
+                print("sqr error", x)
                 return False
         return True

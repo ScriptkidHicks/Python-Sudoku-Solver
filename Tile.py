@@ -9,7 +9,7 @@ class Tile:
     """This object is pretty simple, but a useful base piece"""
 
     def __init__(self, initial_value=None, max=9):
-        self.value = initial_value
+        self.value = None if initial_value == 0 else initial_value
         self.solved = False
         self.possibles = [x for x in range(max)]
         if self.value is not None:
