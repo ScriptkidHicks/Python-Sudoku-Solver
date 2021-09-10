@@ -76,10 +76,5 @@ class Solver:
                 quit("Solve Error")
             elif check[1] is True:
                 changed = True
-            check = self.function_solve(self.hidden_group_solve)
-            if check[0] == "error":
-                quit("Solve Error")
-            elif check[1] is True:
-                changed = True
         print(self.check_solved())
         return
