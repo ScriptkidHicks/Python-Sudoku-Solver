@@ -36,8 +36,17 @@ class Solver:
         changed = False
         for x in range(1, 10):
             possible_tiles = []
+            taken = False
             for element in group:
-                pass
+                if element.value == x:
+                    taken = True
+                elif x in element.possibles:
+                    possible_tiles.append(element)
+            if not taken and (len(possible_tiles) == 1):
+                possible_tiles[0].set_value(x)
+                changed = True
+        return "safe", changed
+
 
     def function_solve(self, solve_method):
         changed = False
@@ -70,5 +79,11 @@ class Solver:
                 quit("Solve Error")
             elif check[1] is True:
                 changed = True
+            check = self.function_solve(self.hidden_group_solve)
+            if check[0] == "error":
+                quit("Solve Error")
+            elif check[1] is True:
+                changed = True
         print(self.check_solved())
+        self.board.board_consistent()
         return
