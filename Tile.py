@@ -29,18 +29,15 @@ class Tile:
 
     def eliminate_possible(self, value):
         print(self.possibles, value)
-        changed = False
-        if value in self.possibles:
-            self.possibles.remove(value)
-            changed = True
+        self.possibles.remove(value)
         if len(self.possibles) == 0:
-            return "error", False
+            return "error"
         if len(self.possibles) == 1:
             self.set_value(self.possibles[0])
             print("solved", self.value)
-            return "safe", True
+            return "safe"
         print("unsolved", self.possibles)
-        return "safe", changed
+        return "safe"
 
     def __repr__(self):
         return str(self.value)
