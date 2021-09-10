@@ -15,9 +15,6 @@ empty = [
 
 newBoard = Board()
 newBoard.set_by_rows(empty)
-mySolver = Solver(newBoard)
-mySolver.naked_solve()
-mySolver.naked_solve()
-mySolver.naked_solve()
-print()
+BoardSolver = Solver(newBoard)
+BoardSolver.solve_board()
 newBoard.print_by_rows()

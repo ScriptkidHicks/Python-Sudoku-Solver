@@ -11,7 +11,7 @@ class Tile:
     def __init__(self, initial_value=None, max=9):
         self.value = None if initial_value == 0 else initial_value
         self.solved = False
-        self.possibles = [x for x in range(1, max)]
+        self.possibles = [x for x in range(1, 10)]
         if self.value is not None:
             self.possibles = [self.value]
             self.solved = True
@@ -32,14 +32,12 @@ class Tile:
         if value in self.possibles:
             self.possibles.remove(value)
             changed = True
-        if len(self.possibles) == 1:
-            self.value = self.possibles[0]
-            self.solved = True
-            return "solved", changed
         if len(self.possibles) == 0:
-            return "error", changed
-        else:
-            return "unsolved", changed
+            return "error", False
+        elif len(self.possibles) == 1:
+            self.set_value(value)
+            return "safe", True
+        return "safe", changed
 
     def __repr__(self):
         return str(self.value)

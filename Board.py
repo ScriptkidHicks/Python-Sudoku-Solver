@@ -1,6 +1,5 @@
 """This is the board object. It contains some definitions about how we want
 the board to represent and operate. Still pretty simple."""
-from typing import List
 from Tile import Tile
 
 
@@ -16,7 +15,7 @@ class Board:
         # to track the maximum number in any spot.
         self.max = 0
 
-    def set_by_rows(self, input_rows: List[List[int]]):
+    def set_by_rows(self, input_rows: list[list[int]]):
         self.max = len(input_rows)
         self.rows = []
 
